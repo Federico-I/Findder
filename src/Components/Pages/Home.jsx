@@ -1,7 +1,13 @@
 import React from "react";
+import UsersResults from "../Users/UsersResults";
 
 function Home() {
-  return <div className="text-6xl">Welcome!</div>;
+  return (
+    <>
+      {/*search component*/}
+      <UsersResults />
+    </>
+  );
 }
 
 export default Home;

@@ -5,10 +5,10 @@ import UsersItem from "./UsersItem";
 import GitHubContext from "../Context/GitHub/GitHubContext";
 
 function UsersResults() {
-  const { displayUsers, loading, fetchUsers } = useContext(GitHubContext);
+  const { displayUsers, loading } = useContext(GitHubContext);
 
   useEffect(() => {
-    fetchUsers();
+    // fetchUsers();
   }, []);
 
   if (!loading) {

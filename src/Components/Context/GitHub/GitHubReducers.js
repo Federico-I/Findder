@@ -3,7 +3,10 @@ const githubReducers = (state, action) => {
     case "GET_USERS":
       return { ...state, users: action.payload, loading: false };
 
-    case "SET_LOAD": {
+    case "FIND_USER":
+      return { ...state, user: action.payload, loading: false };
+
+    case "SET_LOADING": {
       return {
         ...state,
         loading: true,

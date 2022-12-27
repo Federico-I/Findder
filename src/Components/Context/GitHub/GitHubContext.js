@@ -15,6 +15,7 @@ export const GitHubProvider = ({ children }) => {
   // get initial users (test)
   const initialState = {
     displayUsers: [],
+    user: {},
     loading: false,
   };
 
@@ -39,9 +40,31 @@ export const GitHubProvider = ({ children }) => {
       type: "GET_USERS",
       payload: items,
     });
+  };
+
+  // find single user
+  const findUser = async (login) => {
+    setLoading();
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+
+    if (response.status === 404) {
+      window.location = "/notfound";
+    } else {
+      const data = await response.json();
+
+      dispatch({
+        type: "FIND_USER",
+        payload: data,
+      });
+    }
 
     /*setDisplayUsers(data);
-    setLoading(false);*/
+  setLoading(false);*/
   };
 
   // Clear users from state
@@ -55,8 +78,10 @@ export const GitHubProvider = ({ children }) => {
       value={{
         displayUsers: state.displayUsers,
         loading: state.loading,
+        user: state.user,
         searchUsers,
         clearUsers,
+        findUser,
       }}
     ></GitHubContext.Provider>
   );

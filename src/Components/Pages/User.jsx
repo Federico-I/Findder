@@ -1,18 +1,27 @@
 import React, { useContext, useEffect } from "react";
-import { FaCoden, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
+import {
+  FaCode,
+  FaCoden,
+  FaCodepen,
+  FaStore,
+  FaUserFriends,
+  FaUsers,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import DisplaySpinner from "../Layouts/Spinner";
-import userEvent from "@testing-library/user-event";
+import RepoList from "../Repos/RepoList";
 import GitHubContext from "../Context/GitHub/GitHubContext";
 import { useParams } from "react-router-dom";
 
 function User() {
-  const { findUser, user, loading } = useContext(GitHubContext);
+  const { findUser, user, loading, getUserRepos, repos } =
+    useContext(GitHubContext);
 
   const params = useParams();
 
   useEffect(() => {
-    findUser(params.logn);
+    findUser(params.login);
+    getUserRepos(params.login);
   }, []);
 
   const {
@@ -70,8 +79,92 @@ function User() {
                 Visit GitHub Profile with Finnder
               </a>
             </div>
+            <div className="w-full rounded-lg shadow-md bg-base-100 stats">
+              {location && (
+                <div className="stat">
+                  <div className="stat-title tex-mid">Location</div>
+                  <div className="text-lg stat-value">{location}</div>
+                </div>
+              )}
+              {blog && (
+                <div className="stat">
+                  <div className="stat-title tex-mid">Website</div>
+                  <div className="text-lg stat-value">
+                    <a
+                      href={`https://${blog}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {blog}
+                    </a>
+                  </div>
+                </div>
+              )}
+              {twitter_username && (
+                <div className="stat">
+                  <div className="stat-title tex-mid">Twitter</div>
+                  <div className="text-lg stat-value">
+                    <a
+                      href={`https://twitter.com/${twitter_username}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {blog}
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        <div className="w-full py-5 mb-6 rounded-l shadown-md bg-base-100 stats">
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <FaUsers className="text-mxl md:text-5xl" />
+            </div>
+            <div className="stat-title pr-5">Follower</div>
+            <div className="stat-value pr-5 text-3xl md:text-4xl">
+              {followers}
+            </div>
+          </div>
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <FaUserFriends className="text-mxl md:text-5xl" />
+            </div>
+            <div className="stat-title pr-5">Follower</div>
+            <div className="stat-value pr-5 text-3xl md:text-4xl">
+              {followers}
+            </div>
+          </div>
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <FaUsers className="text-mxl md:text-5xl" />
+            </div>
+            <div className="stat-title pr-5">Follower</div>
+            <div className="stat-value pr-5 text-3xl md:text-4xl">
+              {followers}
+            </div>
+          </div>
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <FaCodepen className="text-mxl md:text-5xl" />
+            </div>
+            <div className="stat-title pr-5">Public Repos</div>
+            <div className="stat-value pr-5 text-3xl md:text-4xl">
+              {public_repos}
+            </div>
+          </div>
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <FaStore className="text-mxl md:text-5xl" />
+            </div>
+            <div className="stat-title pr-5">Public Gist</div>
+            <div className="stat-value pr-5 text-3xl md:text-4xl">
+              {public_gists}
+            </div>
+          </div>
+        </div>
+        <RepoList Repos={repos} />
       </div>
     </>
   );
